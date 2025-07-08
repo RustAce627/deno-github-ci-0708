@@ -1,4 +1,59 @@
 name: rust-ubuntu-24.yml
+# 触发条件：推送到 main 分支或创建 PR 到 main 分支时执行
 on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
 
 jobs:
+  build-ubuntu-24:
+    # 直接使用 GitHub 提供的 Ubuntu 24.04 镜像（beta 版）
+    runs-on: ubuntu-24.04
+    # 明确指定架构为 amd64（默认即为 amd64，此处显式声明更清晰）
+
+    steps:
+      - name: 拉取代码
+        uses: actions/checkout@v4
+
+      - name: 配置 Rust 环境
+        uses: actions-rs/toolchain@v1
+        with:
+          # 指定 Rust 工具链版本（stable/beta/nightly 或具体版本如 1.75.0）
+          toolchain: stable
+          # 目标平台：Ubuntu 24.04 amd64 对应的标准目标
+          target: x86_64-unknown-linux-gnu
+          # 覆盖系统默认的 Rust 工具链
+          override: true
+          # 可选：安装 rustfmt 和 clippy（代码格式化和静态检查工具）
+          components: rustfmt, clippy
+
+#      - name: 安装系统依赖（可选）
+#        run: |
+#          sudo apt-get update
+#          # 根据项目需求安装依赖（例如 OpenSSL、数据库库等）
+#          sudo apt-get install -y --no-install-recommends \
+#            libssl-dev \
+#            pkg-config
+
+#      - name: 代码格式化检查（可选）
+#        run: cargo fmt --all -- --check
+#
+#      - name: 静态代码分析（可选）
+#        run: cargo clippy --all-targets --all-features -- -D warnings
+
+      - name: 编译项目（Release 模式）
+        run: cargo build --release --target x86_64-unknown-linux-gnu
+
+#      - name: 运行测试（可选）
+#        run: cargo test --release --target x86_64-unknown-linux-gnu
+
+      - name: 上传编译产物
+        uses: actions/upload-artifact@v4
+        with:
+          name: rust-ubuntu24-amd64-binary
+          # 编译产物路径（替换为你的项目可执行文件名）
+          path: target/x86_64-unknown-linux-gnu/release/as-mes-demo
+          # 产物保留时间（默认 90 天，可选）
+          retention-days: 30
