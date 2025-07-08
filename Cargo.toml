@@ -1,0 +1,6 @@
+[package]
+name = "deno-github-ci-0708"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]

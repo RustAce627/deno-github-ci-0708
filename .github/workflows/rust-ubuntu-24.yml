@@ -1,0 +1,4 @@
+name: rust-ubuntu-24.yml
+on:
+
+jobs:
