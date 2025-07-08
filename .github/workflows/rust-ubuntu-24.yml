@@ -54,6 +54,6 @@ jobs:
         with:
           name: rust-ubuntu24-amd64-binary
           # 编译产物路径（替换为你的项目可执行文件名）
-          path: target/x86_64-unknown-linux-gnu/release/as-mes-demo
+          path: target/x86_64-unknown-linux-gnu/release/deno-github-ci-0708
           # 产物保留时间（默认 90 天，可选）
           retention-days: 30
