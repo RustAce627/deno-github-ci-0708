@@ -22,12 +22,12 @@ jobs:
         with:
           # 指定 Rust 工具链版本（stable/beta/nightly 或具体版本如 1.75.0）
           toolchain: stable
-          # 目标平台：Ubuntu 24.04 amd64 对应的标准目标
-          target: x86_64-unknown-linux-gnu
-          # 覆盖系统默认的 Rust 工具链
-          override: true
-          # 可选：安装 rustfmt 和 clippy（代码格式化和静态检查工具）
-          components: rustfmt, clippy
+#          # 目标平台：Ubuntu 24.04 amd64 对应的标准目标
+#          target: x86_64-unknown-linux-gnu
+#          # 覆盖系统默认的 Rust 工具链
+#          override: true
+#          # 可选：安装 rustfmt 和 clippy（代码格式化和静态检查工具）
+#          components: rustfmt, clippy
 
 #      - name: 安装系统依赖（可选）
 #        run: |
@@ -44,7 +44,7 @@ jobs:
 #        run: cargo clippy --all-targets --all-features -- -D warnings
 
       - name: 编译项目（Release 模式）
-        run: cargo build --release --target x86_64-unknown-linux-gnu
+        run: cargo build --release
 
 #      - name: 运行测试（可选）
 #        run: cargo test --release --target x86_64-unknown-linux-gnu
